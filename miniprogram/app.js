@@ -1,2 +1,5 @@
-// app.js
-App({})
+App({
+  onLaunch() {
+    console.log('App launched')
+  }
+})
