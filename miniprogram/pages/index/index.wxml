@@ -1,0 +1,8 @@
+<view class="container">
+  <button bindtap="uploadAudio">上传音频文件</button>
+
+  <view wx:for="{{tattooImages}}" wx:key="style" class="tattoo-list">
+    <image wx:for-item="{{item}}" src="{{tattooImages[item]}}" mode="widthFix" class="tattoo-image" />
+    <button data-style="{{item}}" bindtap="tryOnAR">试戴 AR</button>
+  </view>
+</view>

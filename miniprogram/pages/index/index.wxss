@@ -1,0 +1,16 @@
+.container {
+  padding: 20px;
+}
+
+.tattoo-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tattoo-image {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
+}
