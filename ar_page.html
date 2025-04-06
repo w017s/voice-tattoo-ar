@@ -1,55 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR Tattoo</title>
-
-  <!-- 引入 A-Frame 和 AR.js 库 -->
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-    #ar-container {
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-</head>
-<body>
-  <div id="ar-container">
-    <!-- A-Frame 场景元素 -->
-    <a-scene embedded arjs>
-
-      <!-- 通过 Hiro 标记识别触发 AR 内容 -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Voice Tattoo AR</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
+    <style>
+      body, html {
+        margin: 0;
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false;"
+    >
+      <!-- 图像识别标记图（可自定义 marker） -->
       <a-marker preset="hiro">
-        <!-- 在标记上显示 3D 纹身模型 -->
-        <a-entity
-          id="tattoo-model"
-          position="0 0 0"
-          scale="0.5 0.5 0.5"
-          gltf-model="url('path_to_tattoo_model.gltf')">
-        </a-entity>
+        <a-plane id="tattoo-img"
+                 position="0 0 0"
+                 rotation="-90 0 0"
+                 width="1"
+                 height="1"
+                 material="src: #tattooTexture; transparent: true">
+        </a-plane>
       </a-marker>
 
-      <!-- 使用相机来查看 AR 场景 -->
+      <!-- 相机 -->
       <a-entity camera></a-entity>
     </a-scene>
-  </div>
 
-  <!-- 可选：根据用户传入的纹身图案动态加载 -->
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const tattooImageUrl = urlParams.get('tattoo');
-    const tattooModelEntity = document.getElementById('tattoo-model');
+    <!-- 动态加载纹身图 -->
+    <script>
+      function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
 
-    if (tattooImageUrl) {
-      tattooModelEntity.setAttribute('gltf-model', tattooImageUrl);
-    }
-  </script>
-</body>
+      const tattooImgURL = getQueryParam("img");
+
+      if (tattooImgURL) {
+        const img = document.createElement("img");
+        img.setAttribute("id", "tattooTexture");
+        img.setAttribute("crossorigin", "anonymous"); // 支持跨域加载 GitHub 图片
+        img.setAttribute("src", tattooImgURL);
+        document.body.appendChild(img);
+      }
+    </script>
+  </body>
 </html>
